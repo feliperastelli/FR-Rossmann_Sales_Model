@@ -120,6 +120,13 @@ O dados do projeto foram testados com modelos lineares e não lineares.Foi utili
 
 **Comparação da performance dos modelos:**
 
+***Model Name*** | ***MAE CV*** | ***MAPE CV*** | ***RMSE CV*** |
+| ---------------- | ---------- | --------- | ---------- |
+|Random Forest Regressor | 842.56 +/- 220.07 | 0.12 +/- 0.02	 | 1264.33 +/- 323.29 |
+|XGBoost Regressor | 1048.45 +/- 172.04 | 0.14 +/- 0.02	 | 1513.27 +/- 234.33 |
+|Average Model | 1354.80 | 0.45	 | 1835.13 |
+|Linear Regression | 2081.73 +/- 295.63 | 0.3 +/- 0.02	 | 2952.52 +/- 468.37 |
+|Lasso | 2116.38 +/- 341.5 | 0.29 +/- 0.01	 | 3057.75 +/- 504.26 |
 
 **Performance final do modelo escolhido após Hyperparameter Fine Tuning:**
 
