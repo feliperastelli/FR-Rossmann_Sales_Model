@@ -74,7 +74,7 @@ O projeto foi desenvolvido através do método CRISP-DM, aplicando os seguintes 
 
 **Step 06 - Feature Selection:** O objetivo desta etapa foi selecionar os melhores atributos para treinar o modelo. Foi utilizado o algoritmo Boruta para fazer a seleção das variáveis, destacando as que tinham mais relevância para o fenômeno.
 
-**Step 07 - Machine Learning Modeling:** Nessa etapa foi feito os testes e treinamento de alguns modelos de machine learning, onde foi possível comparar suas respectivas performance e feita a escolha do modelo ideal para o projeto.
+**Step 07 - Machine Learning Modeling:** Nessa etapa foi feito os testes e treinamento de alguns modelos de machine learning, onde foi possível comparar suas respectivas performance e feita a escolha do modelo ideal para o projeto. Inclusive foi utilizada a técnica de Cross Validation para garantir a performance real sobre os dados selecionados.
 
 **Step 08 - Hyperparameter Fine Tunning:** Tendo a escolha do algorotimo XBoost na etapa anterior, foi feita uma analise através do método Randon Search para escolher os melhores valores para cada um dos parâmetros do modelo. Ao final dessa etapa foi possível obter os valores finais da performance do modelo.
 
@@ -102,6 +102,60 @@ O projeto foi desenvolvido através do método CRISP-DM, aplicando os seguintes 
   ![image](https://user-images.githubusercontent.com/77105763/142774550-6be3c362-d896-46c7-a57a-3b17914b68c1.png)
 
 *Demais insights podem ser consultados nos notebooks do projeto.*
+
+## 4. Performance dos Modelos de Machine Learning:
+
+O dados do projeto foram testados com modelos lineares e não lineares.Foi utilizada a estratégia de selecionar 5 tipos de modelos: Modelo de média, dois modelos lineares, e dois não-lineares. A média por exemplo serviu como base de referência. Os modelos lineares servem para avaliar a complexidade de aprendizado do conjunto de dados. Caso a performance fosse ruim, poderia entender que seria necessário um modelo mais complexo 
+
+**- Modelos Lineares:**
+
+   - Média
+   - Linear Regression 
+   - Linear Regression Regularized
+
+**- Modelos Não Lineares:**
+
+   - Random Forest Regressor 
+   - XGBoost Regressor
+
+**Comparação da performance dos modelos:**
+
+
+**Performance final do modelo escolhido após Hyperparameter Fine Tuning:**
+
+***Model Name*** | ***MAE*** | ***MAPE*** | ***RMSE*** |
+| -------- | --------- | --------- | --------- |
+|XGBoost Regressor | 673.394631 | 0.097298	 | 965.731681 |
+
+## 5. Resultado final - Model performance vs Business Values
+
+O resultado final do projeto foi satisfatório para a maior parte das lojas abrangidas nos dados, conforme gráfico abaixo (Essas lojas em específico podem conter particularidades e possivelmente num segundo ciclo desse projeto, algo poderia ser feito para melhor a performance e predição para elas).
+
+![image](https://user-images.githubusercontent.com/77105763/143149982-0e6c1f18-3874-412a-a82f-01ff03b13c85.png)
+
+A maior parte das lojas tiveram o erro MAPE muito próximo do erro performado no modelo - **MAPE Error de 9%**
+
+Como indicado no resumo prévio do projeto, o resultado que pode ser obtido utilizando-se do modelo, considerando o melhor e pior cenário, é o seguinte:
+
+| __Scenarios__ | __Values__ |
+| ------------- | -----------|
+| predictions	| US$ 282,662,848.00 |
+| worst scenario | US$ 281,907,880.11 |
+| best scenario	| US$ 283,417,771.65 |
+
+
+
+Podemos observar o performance do modelo, avaliando a relação entre as vendas (dados de teste) e as predições:
+
+![image](https://user-images.githubusercontent.com/77105763/143151060-c9ef9bcd-a266-4a1a-9457-e99a203d77d6.png)
+
+## 6. Conclusão
+
+O projeto desenvolvido foi concluído com êxito, onde foi possível projetar as vendas das próximas semanas para que o CFO tenha informações reais para criar o budget das lojas, podendo consultar em tempo real cada predição.
+
+- O deploy do modelo desenvolvido e da aplicação do Bot do Telegram foram construídos no ambiente em nuvem do **Heroku** e estão em funcionamento.
+
+- Toda documentação do projeto pode ser consultada no repositório, incluindo os notebooks desenvolvidos e todos os scritps finais para as aplicações web.
 
 
 
