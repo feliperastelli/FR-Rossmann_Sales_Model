@@ -1,4 +1,4 @@
-### :pushpin: __Read in English__
+### :pushpin: [__Read in English__](https://github.com/feliperastelli/FR-Rossmann_Sales_Model/blob/main/README-en.md)
 
 # Rossmann Sales Model
 
