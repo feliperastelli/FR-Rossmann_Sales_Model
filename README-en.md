@@ -2,11 +2,11 @@
 
 # Rossmann Sales Model
 
-O objetivo desse projeto é fornecer para o CFO da Rossmann Drug Stores, um **modelo de previsão de vendas** para as próximas seis semanas para que ele possa definir um orçamento específico para reformas nas lojas. O modelo de previsão atualmente utilizado não atende as necessidades da empresa, portanto, o modelo de machine learning desenvolvido nesse projeto veio como uma solução exata para esse problema de negócio.
+The goal of this project is to provide the Rossmann Drug Stores CFO a **sales forecast model** for the next six weeks so that he can set a specific budget for store renovations. The prediction model used does not meet the company's needs, therefore, the machine learning model developed in this project came as an exact solution for this business problem.
 
-O projeto foi desenvolvido através da técnica CRISP-DM, e ao final do primeiro ciclo de desenvolvimento foi possível produzir um modelo de previsão com indíce **MAPE Error de 9%** utilizando o algoritmo **XGBoost**.
+The project was developed using the CRISP-DM technique, and at the end of the first development cycle it was possible to produce a prediction model with a **MAPE Error index of 9%** using the **XGBoost** algorithm.
 
-Em termos de negócio, o resultado desse modelo de previsão pode ser resumido com os números abaixo:
+In terms of business, the result of this forecasting model can be summarized with the numbers below:
 
 | __Scenarios__ | __Values__ |
 | ------------- | -----------|
@@ -14,29 +14,29 @@ Em termos de negócio, o resultado desse modelo de previsão pode ser resumido c
 | worst scenario | US$ 281,907,880.11 |
 | best scenario	| US$ 283,417,771.65 |
 
-*O worst scenario considera o erro calculado do modelo (MAE) negativamente e o best scenario, positivamente.
+*The worst scenario considers the calculated model error (MAE) negatively and the best scenario positively.
 
-Para visualização do resultado da previsão de cada loja, foi construindo um bot no aplicativo Telegram, onde o usuário pode inserir o número da loja e terá o retorno da previsão calculada pelo modelo que foi colocado em produção no Heroku. Ou seja, foi realizado o deploy em produção do modelo e bot para que possam ser acessados de qualquer lugar.
+To view the result of each store's forecast, a bot was built in the Telegram application, where the user can enter the store number and will have the return of the forecast calculated by the model that was put into production in Heroku. In other words, the model and bot were deployed in production so they can be accessed from anywhere.
 
-Para acessar basta apenas ter o aplicativo instalado no smartphone ou PC, criar uma conta, e solicitar para o contato Bot o número da loja. Ex: '/22', '/50'. Faça o teste:
+To access, just have the app installed on your smartphone or PC, create an account, and ask the Bot contact for the store number. Ex: '/22', '/50'. Do the test:
 
 [<img alt="Telegram" src="https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white"/>]( http://t.me/vs_rossmannbot)
 
-## 1. Sobre a Rossmann Drug Store
+## 1. About Rossmann Drug Store
 
-### 1.1 Contexto do negócio:
+### 1.1 Business Context:
 
-A Rossmann é uma das maiores redes de drogaria da Europa, com cerca de 56.200 funcionários e mais de 4000 lojas em diversos países, como Alemanha, Polônia, Hungria, República Tcheca, Turquia, Albânia, Kosovo e Espanha. É uma empresa com um grande sortimento de produtos que são oferecidos as seus clientes, incluindo produtos próprios. A companhia está em grande expansão e num ritmo elevado, com grandes investimentos.
+Rossmann is one of the largest drugstore chains in Europe, with approximately 56,200 employees and more than 4000 stores in several countries, such as Germany, Poland, Hungary, Czech Republic, Turkey, Albania, Kosovo and Spain. It is a company with a wide range of products that are offered to its customers, including its own products. The company is expanding rapidly and at a high pace, with large investments.
 
-### 1.2 Questão do negócio:
+### 1.2 Business Question:
 
-Como citado acima, o projeto foi desenvolvido a partir da necessidade do CFO da empresa ter a previsão de vendas das próximas seis semanas, para garantir e avaliar o orçamento especifico para possíveis reformas das lojas. Outrora, o mesmo não possuia um modelo de previsão e o método utilizado não era satisfatório.
+As mentioned above, the project was developed from the need of the company's CFO to have a sales forecast for the next six weeks, to guarantee and evaluate the specific budget for possible renovations to the stores. In the past, it did not have a forecasting model and the method used was not satisfactory.
 
-### 1.3 Sobre os dados:
+### 1.3 About the Data:
 
-Os dados foram disponibilizados pela empresa na plataforma do Kaggle: https://www.kaggle.com/c/rossmann-store-sales/data
+The data were made available by the company on the Kaggle platform: https://www.kaggle.com/c/rossmann-store-sales/data
 
-|***Atributo*** | ***Descrição*** |
+|***Attribute*** | ***Description*** |
 | -------- | --------- |
 |**Id** | an Id that represents a (Store, Date) duple within the test set |
 |**Store** | a unique Id for each store |
@@ -54,39 +54,39 @@ Os dados foram disponibilizados pela empresa na plataforma do Kaggle: https://ww
 |**Promo2Since[Year/Week]** | describes the year and calendar week when the store started participating in Promo2 | 
 |**PromoInterval** | describes the consecutive intervals Promo2 is started, naming the months the promotion is started anew. E.g. "Feb,May,Aug,Nov" means each round starts in February, May, August, November of any given year for that store | 
 
-### 1.4 Premissas do negócio:
+### 1.4 Business Assumptions:
 
 - The days when stores were closed (Open) were removed from the analysis.
 - Only stores with sales values bigger than 0 were considered.
 - For stores which did not have Competition Distance information, it was considered that the distance should be the longest distance observed in the data set.
 
-## 2. Planejamento da solução:
+## 2. Solution planning:
 
-O projeto foi desenvolvido através do método CRISP-DM, aplicando os seguintes passos:
+The project was developed using the CRISP-DM method, applying the following steps:
 
-**Step 01 - Data Description:** Nessa etapa, o objetivo foi conhecer os dados, seus tipos, usar métricas estatísticas para identificar outliers no escopo do negócio e também analisar métricas estatísticas básicas como: média, mediana, máximo, mínimo, range, skew, kurtosis e desvio padrão. Nessa etapa também foram feitos alguns ajustes em features do dataset, como preenchimento de NA's por exemplo.
+**Step 01 - Data Description:** At this stage, the objective was to know the data, its types, use statistical metrics to identify outliers in the business scope and also analyze basic statistical metrics such as: mean, median, maximum, minimum, range, skew, kurtosis and standard deviation. At this stage, some adjustments were also made to dataset features, such as filling NA's for example.
 
-**Step 02 - Feature Engineering:** Nessa etapa, foi desenvolvido um mapa mental para analisar o fenômeno, suas variáveis e os principais aspectos que impactam cada variável. A partir das características do hipóteses e da necessidade de novos atributos, foram elevados novos recursos a partir das variáveis originais, a fim de melhorar o fenômeno do ser modelado.
+**Step 02 - Feature Engineering:** At this stage, a mental map was developed to analyze the phenomenon, its variables and the main aspects that impact each variable. From the characteristics of the hypotheses and the need for new attributes, new features were raised from the original variables, in order to improve the phenomenon of being modeled.
 
-**Step 03 - Data Filtering:** O objetivo desta etapa foi filtrar linhas e excluir colunas que não são relevantes para o modelo ou não fazem parte do escopo do negócio, como por exemplo, desconsiderar dias que as lojas não estavam operando e/ou que não houveram vendas.
+**Step 03 - Data Filtering:** The purpose of this step was to filter lines and exclude columns that are not relevant to the model or are not part of the business scope, such as disregarding days when stores were not operating and/or there were no sales.
 
-**Step 04 - Exploratory Data Analysis:** O objetivo desta etapa foi explorar os dados para encontrar insights, entender melhor a relevância das variáveis no aprendizado do modelo. Foram feitas analises univariadas, biváriadas e multivariadas, utilizandos os dados numéricos e categóricos do conjunto.
+**Step 04 - Exploratory Data Analysis:** The purpose of this step was to explore the data to find insights, better understand the relevance of the variables in learning the model. Univariate, bivariate and multivariate analyzes were performed, using numerical and categorical data from the set.
 
-**Step 05 - Data Preparation:** Nessa etapa,  os dados foram preparados para o inicio das aplicações de modelos de machine learning. Foram utilizadas técnicas como Rescaling e Transformation, através de encodings e nature transformation.
+**Step 05 - Data Preparation:** At this stage, the data were prepared for the beginning of machine learning model applications. Techniques such as Rescaling and Transformation were used, through encodings and nature transformation.
 
-**Step 06 - Feature Selection:** O objetivo desta etapa foi selecionar os melhores atributos para treinar o modelo. Foi utilizado o algoritmo Boruta para fazer a seleção das variáveis, destacando as que tinham mais relevância para o fenômeno.
+**Step 06 - Feature Selection:** The objective of this step was to select the best attributes to train the model. The Boruta algorithm was used to select the variables, highlighting those that were more relevant to the phenomenon.
 
-**Step 07 - Machine Learning Modeling:** Nessa etapa foi feito os testes e treinamento de alguns modelos de machine learning, onde foi possível comparar suas respectivas performance e feita a escolha do modelo ideal para o projeto. Inclusive foi utilizada a técnica de Cross Validation para garantir a performance real sobre os dados selecionados.
+**Step 07 - Machine Learning Modeling:** At this stage, tests and training of some machine learning models were carried out, where it was possible to compare their respective performance and to choose the ideal model for the project. The Cross Validation technique was even used to guarantee the real performance on the selected data.
 
-**Step 08 - Hyperparameter Fine Tunning:** Tendo a escolha do algorotimo XBoost na etapa anterior, foi feita uma analise através do método Randon Search para escolher os melhores valores para cada um dos parâmetros do modelo. Ao final dessa etapa foi possível obter os valores finais da performance do modelo.
+**Step 08 - Hyperparameter Fine Tunning:** Having chosen the XBoost algorithm in the previous step, an analysis was performed using the Randon Search method to choose the best values for each of the model's parameters. At the end of this step, it was possible to obtain the final values of the model's performance.
 
-**Step 09 - Error Translation and Interpretation:** O objetivo dessa etapa foi de fato demonstrar o resultado do projeto, onde foi possível avaliar a performance do modelo com o viés de negócio, demonstrando o resultado financeiro que pode ser esperado se aplicado o modelo desenvolvido.
+**Step 09 - Error Translation and Interpretation:** The objective of this stage was in fact to demonstrate the result of the project, where it was possible to evaluate the performance of the model with a business bias, demonstrating the financial result that can be expected if the developed model is applied.
 
-**Step 10 - Deploy Model to Production:** Após execução bem sucedida do modelo, o objetivo foi publica-lo em um ambiente de nuvem para que outras pessoas ou serviços possam usar os resultados para melhorar a decisão de negócios. A plataforma de aplicativo em nuvem escolhida foi o Heroku.
+**Step 10 - Deploy Model to Production:** After successful execution of the model, the objective was to publish it to a cloud environment so that other people or services can use the results to improve the business decision. The chosen cloud application platform was Heroku.
 
-**Step 11 - Telegram Bot:** A etapa final do projeto foi criar um bot no app de mensagens - Telegram, que possibilita consultar as previsões a qualquer momento e lugar, visto que também foi feito o deploy na plataforma em nuvem.
+**Step 11 - Telegram Bot:** The final stage of the project was to create a bot in the messaging app - Telegram, which makes it possible to consult forecasts at any time and place, as it was also deployed on the cloud platform.
 
-## 3. Principais insights:
+## 3. Key Insights:
 
 **Hypothesis 1:** Stores with larger assortments should sell more.
   **False:** Stores with a larger assortment sell LESS.
@@ -103,24 +103,24 @@ O projeto foi desenvolvido através do método CRISP-DM, aplicando os seguintes 
   
   ![image](https://user-images.githubusercontent.com/77105763/142774550-6be3c362-d896-46c7-a57a-3b17914b68c1.png)
 
-*Demais insights podem ser consultados nos notebooks do projeto.*
+*Other insights can be found in the project notebooks.*
 
-## 4. Performance dos Modelos de Machine Learning:
+## 4. Machine Learning Models Performance:
 
-O dados do projeto foram testados com modelos lineares e não lineares.Foi utilizada a estratégia de selecionar 5 tipos de modelos: Modelo de média, dois modelos lineares, e dois não-lineares. A média por exemplo serviu como base de referência. Os modelos lineares servem para avaliar a complexidade de aprendizado do conjunto de dados. Caso a performance fosse ruim, poderia entender que seria necessário um modelo mais complexo 
+The project data were tested with linear and non-linear models. The strategy of selecting 5 types of models was used: Mean model, two linear models, and two non-linear models. The average for example served as a reference base. Linear models serve to assess the learning complexity of the dataset. If the performance was bad, I could understand that a more complex model would be needed.
 
-**- Modelos Lineares:**
+**- Linear Models:**
 
-   - Média
+   - Average
    - Linear Regression 
    - Linear Regression Regularized
 
-**- Modelos Não Lineares:**
+**- Nonlinear Models:**
 
    - Random Forest Regressor 
    - XGBoost Regressor
 
-**Comparação da performance dos modelos:**
+**Comparing the performance of models:**
 
 ***Model Name*** | ***MAE CV*** | ***MAPE CV*** | ***RMSE CV*** |
 | ---------------- | ---------- | --------- | ---------- |
@@ -130,21 +130,21 @@ O dados do projeto foram testados com modelos lineares e não lineares.Foi utili
 |Linear Regression | 2081.73 +/- 295.63 | 0.3 +/- 0.02	 | 2952.52 +/- 468.37 |
 |Lasso | 2116.38 +/- 341.5 | 0.29 +/- 0.01	 | 3057.75 +/- 504.26 |
 
-**Performance final do modelo escolhido após Hyperparameter Fine Tuning:**
+**Final performance of the chosen model after Hyperparameter Fine Tuning:**
 
 ***Model Name*** | ***MAE*** | ***MAPE*** | ***RMSE*** |
 | -------- | --------- | --------- | --------- |
 |XGBoost Regressor | 673.394631 | 0.097298	 | 965.731681 |
 
-## 5. Resultado final - Model performance vs Business Values
+## 5. Final result - Model performance vs Business Values
 
-O resultado final do projeto foi satisfatório para a maior parte das lojas abrangidas nos dados, conforme gráfico abaixo (Essas lojas em específico podem conter particularidades e possivelmente num segundo ciclo desse projeto, algo poderia ser feito para melhor a performance e predição para elas).
+The final result of the project was satisfactory for most of the stores covered in the data, as shown in the graph below (These stores in particular may contain particularities and possibly in a second cycle of this project, something could be done to improve performance and prediction for them).
 
 ![image](https://user-images.githubusercontent.com/77105763/143149982-0e6c1f18-3874-412a-a82f-01ff03b13c85.png)
 
-A maior parte das lojas tiveram o erro MAPE muito próximo do erro performado no modelo - **MAPE Error de 9%**
+Most stores had the MAPE error very close to the error performed in the model - **MAPE Error 9%**
 
-Como indicado no resumo prévio do projeto, o resultado que pode ser obtido utilizando-se do modelo, considerando o melhor e pior cenário, é o seguinte:
+As indicated in the previous project summary, the result that can be obtained using the model, considering the best and worst scenario, is as follows:
 
 | __Scenarios__ | __Values__ |
 | ------------- | -----------|
@@ -154,14 +154,14 @@ Como indicado no resumo prévio do projeto, o resultado que pode ser obtido util
 
 
 
-Podemos observar o performance do modelo, avaliando a relação entre as vendas (dados de teste) e as predições:
+We can observe the performance of the model, evaluating the relationship between sales (test data) and predictions:
 
 ![image](https://user-images.githubusercontent.com/77105763/143151060-c9ef9bcd-a266-4a1a-9457-e99a203d77d6.png)
 
-## 6. Conclusão
+## 6. Conclusion
 
-O projeto desenvolvido foi concluído com êxito, onde foi possível projetar as vendas das próximas semanas para que o CFO tenha informações reais para criar o budget das lojas, podendo consultar em tempo real cada predição.
+The developed project was successfully concluded, where it was possible to project sales for the coming weeks so that the CFO has real information to create the stores' budget, being able to consult each prediction in real time.
 
-- O deploy do modelo desenvolvido e da aplicação do Bot do Telegram foram construídos no ambiente em nuvem do **Heroku** e estão em funcionamento.
+- The deployment of the developed model and the Telegram Bot application were built in the **Heroku** cloud environment and are in operation.
 
-- Toda documentação do projeto pode ser consultada no repositório, incluindo os notebooks desenvolvidos e todos os scritps finais para as aplicações web.
+- All project documentation can be consulted in the repository, including developed notebooks and all final scripts for web applications.
